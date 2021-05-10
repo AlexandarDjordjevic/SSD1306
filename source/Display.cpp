@@ -8,7 +8,7 @@ namespace SSD1306
 			static_cast<uint8_t>(Display::COMMAND),
 			command
 		};
-		SSD1306::ComInterface::GetComInterface().Write(data, 2);
+		return SSD1306::ComInterface::GetComInterface().Write(data, 2);
 	}
 
 	bool Display::WriteCommand(Display::Command command){
@@ -16,7 +16,7 @@ namespace SSD1306
 			static_cast<uint8_t>(Display::COMMAND),
 			static_cast<uint8_t>(command)
 		};
-		SSD1306::ComInterface::GetComInterface().Write(data, 2);
+		return SSD1306::ComInterface::GetComInterface().Write(data, 2);
 	}
 
 

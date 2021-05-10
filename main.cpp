@@ -10,6 +10,7 @@ bool I2CWrite(const uint8_t* data, size_t size){
 		std::cout << "0x" << std::setfill('0') << std::setw(2) << std::hex << (int)data[i] << " ";
 	}
 	std::cout << std::dec << std::endl;
+	return true;
 }
 
 int main(){
