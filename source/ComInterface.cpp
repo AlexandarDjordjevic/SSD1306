@@ -4,7 +4,6 @@ namespace SSD1306
 {
 	
 	ComInterface::~ComInterface(){
-
 	}
 
 	ComInterface& ComInterface::GetComInterface(){
@@ -26,6 +25,5 @@ namespace SSD1306
 
 		return writeDelegate(data, size);
 	}
-
 
 } // namespace SSD1306

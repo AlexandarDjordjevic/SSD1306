@@ -30,8 +30,8 @@ namespace SSD1306
 			SetStartLine			= 0x40,
 			ChargePump				= 0x8D,
 			MemoryAddressingMode	= 0x20,
-
 		};
+
 	public:
 		enum class ChargePumpStatus{
 			ENABLE	= 0x14,
@@ -101,7 +101,6 @@ namespace SSD1306
 
 		bool MemoryAddressingMode(MemoryAddressingModeType mamt);
 
-
 	private:
 		bool WriteCommand(Command command);
 		bool WriteCommand(uint8_t command);
@@ -109,5 +108,4 @@ namespace SSD1306
 	private:
 
 	};
-
 } // namespace SSD1306

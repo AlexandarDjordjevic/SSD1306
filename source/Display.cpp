@@ -3,11 +3,9 @@
 namespace SSD1306{
 
 	Display::Display(){
-
 	}
 
 	Display::~Display(){
-
 	}
 
 	bool Display::Initialize(){
@@ -15,8 +13,7 @@ namespace SSD1306{
 		settings.SetClockDIV(0x80);
 		settings.SetMultiplex(0x3f);
 		settings.SetOffset(0);
-
-        return true;
+		return true;
 	}
 
 	bool Display::On(){
