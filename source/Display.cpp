@@ -13,6 +13,7 @@ namespace SSD1306{
 		settings.SetClockDIV(0x80);
 		settings.SetMultiplex(0x3f);
 		settings.SetOffset(0);
+		settings.SetContrast(0xcf);
 		return true;
 	}
 

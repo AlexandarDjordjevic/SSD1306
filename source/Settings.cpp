@@ -42,13 +42,17 @@ namespace SSD1306
 	bool Settings::SetStartLine(uint8_t value){
 		return WriteCommand(Settings::Command::SetStartLine);
 	}
-	
+
 	bool Settings::ChargePump(Settings::ChargePumpStatus cps){
 		return WriteCommand(Settings::Command::ChargePump) && WriteCommand(static_cast<uint8_t>(cps));
 	}
 
 	bool Settings::MemoryAddressingMode(Settings::MemoryAddressingModeType mamt){
 		return WriteCommand(Settings::Command::MemoryAddressingMode) && WriteCommand(static_cast<uint8_t>(mamt));
+	}
+
+	bool Settings::SetContrast(uint8_t contrast){
+		return WriteCommand(Settings::Command::SetContrast) && WriteCommand(static_cast<uint8_t>(contrast));
 	}
 
 } // namespace SSD1306
