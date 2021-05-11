@@ -18,12 +18,14 @@ namespace SSD1306
 	public:
 		typedef bool(*writeDelegate_t)(const uint8_t* source, size_t size);
 		typedef bool(*readDelegate_t)(uint8_t* destination, size_t max_size);
+
 	private:
 		/**
 		 * @brief Default constructor
 		 * 
 		 */
 		ComInterface() = default;
+
 	public:
 		/**
 		 * @brief Default destructor

@@ -12,7 +12,6 @@
 
 namespace SSD1306
 {
-
 	class Settings{
 
 	private:
@@ -105,7 +104,6 @@ namespace SSD1306
 		bool WriteCommand(Command command);
 		bool WriteCommand(uint8_t command);
 
-	private:
-
 	};
+
 } // namespace SSD1306
