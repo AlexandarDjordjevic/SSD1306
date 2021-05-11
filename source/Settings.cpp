@@ -28,31 +28,76 @@ namespace SSD1306
 	}
 
 	bool Settings::SetClockDIV(uint8_t value){
-		return WriteCommand(Settings::Command::SetClockDiv) && WriteCommand(value);
+		return WriteCommand(Settings::Command::SetClockDiv) && 
+				WriteCommand(value);
 	}
 
-	bool Settings::SetMultiplex(uint8_t value){
-		return WriteCommand(Settings::Command::SetMultiplex) && WriteCommand(value);
+	bool Settings::SetMultiplex(uint8_t multiplex){
+		return WriteCommand(Settings::Command::SetMultiplex) && 
+				WriteCommand(multiplex);
 	}
 
-	bool Settings::SetOffset(uint8_t value){
-		return WriteCommand(Settings::Command::SetDisplayOffset) && WriteCommand(value);
+	bool Settings::SetOffset(uint8_t offset){
+		return WriteCommand(Settings::Command::SetDisplayOffset) && 
+				WriteCommand(offset);
 	}
 
-	bool Settings::SetStartLine(uint8_t value){
-		return WriteCommand(Settings::Command::SetStartLine);
+	bool Settings::SetStartLine(uint8_t startLine){
+		if (startLine > 63)
+			return false;
+		return WriteCommand(static_cast<uint8_t>(Settings::Command::SetStartLine) | startLine);
 	}
 
-	bool Settings::ChargePump(Settings::ChargePumpStatus cps){
-		return WriteCommand(Settings::Command::ChargePump) && WriteCommand(static_cast<uint8_t>(cps));
+	bool Settings::SetChargePump(Settings::ChargePumpStatus cps){
+		return WriteCommand(Settings::Command::SetChargePump) && 
+				WriteCommand(static_cast<uint8_t>(cps));
 	}
 
-	bool Settings::MemoryAddressingMode(Settings::MemoryAddressingModeType mamt){
-		return WriteCommand(Settings::Command::MemoryAddressingMode) && WriteCommand(static_cast<uint8_t>(mamt));
+	bool Settings::MemoryAddressingMode(Settings::MemoryAddressingModeType memAddrMode){
+		return WriteCommand(Settings::Command::SetMemoryAddressingMode) && 
+				WriteCommand(static_cast<uint8_t>(memAddrMode));
+	}
+
+	bool Settings::SetPageStartAddress(uint8_t page){
+		if (page > 7)
+			return false;
+		return WriteCommand(0xB0 | page);
+	}
+
+	bool Settings::SetColumnStartAddress(uint8_t address){
+		return WriteCommand(((address >> 4) & 0x0F) | 0x10) && 
+				WriteCommand(address & 0x0F);
 	}
 
 	bool Settings::SetContrast(uint8_t contrast){
-		return WriteCommand(Settings::Command::SetContrast) && WriteCommand(static_cast<uint8_t>(contrast));
+		return WriteCommand(Settings::Command::SetContrast) && 
+				WriteCommand(static_cast<uint8_t>(contrast));
 	}
 
+	bool Settings::SetSegmentRemap(bool remap){
+		if (remap)
+			return WriteCommand(static_cast<uint8_t>(Settings::Command::SetSegmentRemap) | 0x01);
+		else
+			return WriteCommand(Settings::Command::SetSegmentRemap);
+	}
+
+	bool Settings::SetCOMOutScanDirection(bool direction){
+		if (direction)
+			return WriteCommand(static_cast<uint8_t>(Settings::Command::SetCOMOutScanDirection) | 0x08);
+		else
+			return WriteCommand(static_cast<uint8_t>(Settings::Command::SetCOMOutScanDirection));
+	}
+
+	bool Settings::SetCOMPins(COMPinConfiguration pinConf, COMPinConfigurationRemap pinConfRemap){
+		return WriteCommand(Settings::Command::SetCOMPins) &&
+				WriteCommand(static_cast<uint8_t>(pinConf) | static_cast<uint8_t>(pinConfRemap));
+	}
+
+
+	bool Settings::SetPreChargePeriod(uint8_t period){
+		if (((period & 0x0f) < 2) || (period & 0xf0) < 0x20))
+			return false;
+		return WriteCommand(Settings::Command::SetPreChargePeriod) && 
+			WriteCommand(static_cast<uint8_t>(period);
+	}
 } // namespace SSD1306
