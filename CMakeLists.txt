@@ -12,11 +12,13 @@ set(CMAKE_CXX_FLAGS "-Wall -Werror")
 
 set(include
 	include/SSD1306/ComInterface.hpp
+	include/SSD1306/Settings.hpp
 	include/SSD1306/Display.hpp
 )
 
 set(source
 	source/ComInterface.cpp
+	source/Settings.cpp
 	source/Display.cpp
 	main.cpp
 )
