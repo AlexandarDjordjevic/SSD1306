@@ -19,11 +19,11 @@ namespace SSD1306
 		return SSD1306::ComInterface::GetComInterface().Write(data, 2);
 	}
 
-	bool Settings::On(){
+	bool Settings::DisplayOn(){
 		return WriteCommand(Settings::Command::On);
 	}
 
-	bool Settings::Off(){
+	bool Settings::DisplayOff(){
 		return WriteCommand(Settings::Command::Off);
 	}
 
@@ -93,11 +93,28 @@ namespace SSD1306
 				WriteCommand(static_cast<uint8_t>(pinConf) | static_cast<uint8_t>(pinConfRemap));
 	}
 
-
 	bool Settings::SetPreChargePeriod(uint8_t period){
-		if (((period & 0x0f) < 2) || (period & 0xf0) < 0x20))
+		if (((period & 0x0f) == 0) || ((period & 0xf0) == 0))
 			return false;
 		return WriteCommand(Settings::Command::SetPreChargePeriod) && 
-			WriteCommand(static_cast<uint8_t>(period);
+			WriteCommand(static_cast<uint8_t>(period));
 	}
+
+	bool Settings::SetVCOMDeselectLvl(VCOMDeselectLvl level){
+		return WriteCommand(Settings::Command::SetVCOMDeselectLvl) && 
+			WriteCommand(static_cast<uint8_t>(level));
+	}
+
+	bool Settings::SetResumeDisplay(ResumeDisplayContent content){
+		return WriteCommand(static_cast<uint8_t>(Settings::Command::SetResumeDisplay) | 
+		static_cast<uint8_t>(content));
+	}
+
+	bool Settings::SetInverseDisplay(bool inverse){
+		if (inverse == true)
+			return WriteCommand(static_cast<uint8_t>(Settings::Command::SetInverseDisplay)| 0x01);
+		else
+			return WriteCommand(Settings::Command::SetNormalDisplay);
+	}
+
 } // namespace SSD1306

@@ -22,17 +22,21 @@ namespace SSD1306
 		enum class Command{
 			On						= 0xA5,
 			Off 					= 0xAe,
+			SetCOMPins				= 0xDA,
 			SetClockDiv 			= 0xd5,
+			SetContrast				= 0x81,
 			SetMultiplex 			= 0xA8,
-			SetDisplayOffset 		= 0xD3,
 			SetStartLine			= 0x40,
 			SetChargePump			= 0x8D,
-			SetMemoryAddressingMode	= 0x20,
-			SetContrast				= 0x81,
 			SetSegmentRemap			= 0xA0,
-			SetCOMOutScanDirection	= 0xc0,
-			SetCOMPins				= 0xDA,
+			SetDisplayOffset 		= 0xD3,
+			SetResumeDisplay		= 0xA4,
+			SetNormalDisplay		= 0xA6,
+			SetInverseDisplay		= 0xA7,
 			SetPreChargePeriod		= 0xD9,
+			SetVCOMDeselectLvl		= 0xDB,
+			SetCOMOutScanDirection	= 0xc0,
+			SetMemoryAddressingMode	= 0x20,
 		};
 
 	public:
@@ -55,6 +59,17 @@ namespace SSD1306
 		enum class COMPinConfigurationRemap{
 			DISABLE_LR_REMAP	= 0x02,
 			ENABLE_LR_REMAP		= 0x12
+		};
+
+		enum class VCOMDeselectLvl{
+			LEVEL_1	= 0x0, ///< ~ 0.65 x VCC
+			LEVEL_2 = 0x20, ///< ~ 0.77 x VCC (RESET)
+			LEVEL_3	= 0x30 ///< ~ 0.83 x VCC
+		};
+
+		enum class ResumeDisplayContent{
+			RAM_CONTENT,
+			ALL_ON
 		};
 
 	public:
@@ -80,14 +95,14 @@ namespace SSD1306
 		 * 
 		 * @return true - success, false - error
 		 */
-		bool On();
+		bool DisplayOn();
 
 		/**
 		 * @brief Disable display output
 		 * 
 		 * @return true - success, false - error
 		 */
-		bool Off();
+		bool DisplayOff();
 
 		/**
 		 * @brief Set the clock divide ratio and oscillator frequency.
@@ -224,6 +239,36 @@ namespace SSD1306
 		 * @return true - success, false - error
 		 */
 		bool SetPreChargePeriod(uint8_t period);
+
+		/**
+		 * @brief This command adjusts the VCOMH regulator output.
+		 * 
+		 * @param level deselect level: LEVEL_1 ~ 0.65 x VCC, LEVEL_2 ~ 0.77 x VCC (RESET)
+		 * or LEVEL_3 ~ 0.83 x VCC
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetVCOMDeselectLvl(VCOMDeselectLvl level);
+
+		/**
+		 * @brief Resume display ON
+		 * 
+		 * @param content value RAM_CONTENT or ALL_ON
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetResumeDisplay(ResumeDisplayContent content);
+
+		/**
+		 * @brief This command sets the display to be either normal or inverse. 
+		 * In normal display a RAM data of 1 indicates an “ON” pixel while in 
+		 * inverse display a RAM data of 0 indicates an “ON” pixel.
+		 * 
+		 * @param inverse true - inverse the display
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetInverseDisplay(bool inverse);
 
 	private:
 		bool WriteCommand(Command command);
