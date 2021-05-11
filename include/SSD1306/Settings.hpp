@@ -13,7 +13,6 @@
 namespace SSD1306
 {
 	class Settings{
-
 	private:
 		enum {
 			COMMAND	= 0,
@@ -103,7 +102,6 @@ namespace SSD1306
 	private:
 		bool WriteCommand(Command command);
 		bool WriteCommand(uint8_t command);
-
 	};
 
 } // namespace SSD1306
