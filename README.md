@@ -21,9 +21,9 @@ SSD1306
 │  └─ SSD1306.pdf
 ├─ include
 │  └─ SSD1306
-│     ├─ ComInterface.hpp
-│     ├─ Display.hpp
-│     └─ Settings.hpp
+│	 ├─ ComInterface.hpp
+│	 ├─ Display.hpp
+│	 └─ Settings.hpp
 ├─ main.cpp
 └─ source
    ├─ ComInterface.cpp
