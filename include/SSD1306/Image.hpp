@@ -32,6 +32,7 @@ namespace SSD1306
 		Image(Image&&) = delete;
 		Image& operator=(Image &&) = delete;
 
+		bool DrawDot(uint8_t x, uint8_t y);
 		bool DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 		bool DrawCircle(uint8_t x, uint8_t y, uint8_t radius, bool fill);
 		bool DrawRectangel(uint8_t x, uint8_t y, uint8_t width, uint8_t height, bool fill);
