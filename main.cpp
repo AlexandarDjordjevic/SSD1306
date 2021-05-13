@@ -14,7 +14,7 @@ bool I2CWrite(const uint8_t* data, size_t size){
 }
 
 int main(){
-	SSD1306::ComInterface::GetComInterface().SetWriteDelegate(I2CWrite);
+	SSD1306::ComInterface::GetComInterface()->SetWriteDelegate(I2CWrite);
 	SSD1306::Display display;
 	display.Initialize();
 	return EXIT_SUCCESS;

@@ -2,13 +2,13 @@
 
 namespace SSD1306
 {
-	
+
 	ComInterface::~ComInterface(){
 	}
 
-	ComInterface& ComInterface::GetComInterface(){
+	ComInterface* ComInterface::GetComInterface(){
 		static ComInterface instance;
-		return instance;
+		return &instance;
 	}
 
 	void ComInterface::SetWriteDelegate(const writeDelegate_t delegate){

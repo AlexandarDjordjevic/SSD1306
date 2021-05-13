@@ -32,9 +32,10 @@ namespace SSD1306
 
 		bool Initialize();
 		bool On();
-
+		bool Update();
 	private:
-		Settings settings;
+		Settings m_Settings;
+
 	};
 
 } // namespace SSD1306

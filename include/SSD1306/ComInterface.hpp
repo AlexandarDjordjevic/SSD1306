@@ -38,7 +38,7 @@ namespace SSD1306
 		ComInterface(ComInterface&&) = delete;
 		ComInterface& operator=(ComInterface &&) = delete;
 
-		static ComInterface& GetComInterface();
+		static ComInterface* GetComInterface();
 
 		void SetWriteDelegate(const writeDelegate_t delegate);
 		void SetReadDelegate(const readDelegate_t delegate);

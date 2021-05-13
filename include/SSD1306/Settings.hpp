@@ -13,6 +13,10 @@
 namespace SSD1306
 {
 	class Settings{
+
+	#define MAX_WIDTH 128
+	#define MAX_HEIGHT 64
+
 	private:
 		enum {
 			COMMAND	= 0,
@@ -28,13 +32,16 @@ namespace SSD1306
 			SetMultiplex 			= 0xA8,
 			SetStartLine			= 0x40,
 			SetChargePump			= 0x8D,
+			SetPageAddress			= 0x22,
 			SetSegmentRemap			= 0xA0,
 			SetDisplayOffset 		= 0xD3,
 			SetResumeDisplay		= 0xA4,
 			SetNormalDisplay		= 0xA6,
+			SetColumnAddress		= 0x21,
 			SetInverseDisplay		= 0xA7,
 			SetPreChargePeriod		= 0xD9,
 			SetVCOMDeselectLvl		= 0xDB,
+			SetPageStartAddress		= 0xB0,
 			SetCOMOutScanDirection	= 0xc0,
 			SetMemoryAddressingMode	= 0x20,
 		};
@@ -77,7 +84,7 @@ namespace SSD1306
 		 * @brief Default constructor
 		 * 
 		 */
-		Settings() = default;
+		Settings();
 
 		/**
 		 * @brief Default destructor
@@ -103,6 +110,20 @@ namespace SSD1306
 		 * @return true - success, false - error
 		 */
 		bool DisplayOff();
+
+		/**
+		 * @brief Set the display width
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetWidth(uint8_t width);
+
+		/**
+		 * @brief Set the display height
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetHeight(uint8_t height);
 
 		/**
 		 * @brief Set the clock divide ratio and oscillator frequency.
@@ -165,6 +186,32 @@ namespace SSD1306
 		 * @return true - success, false - error
 		 */
 		bool MemoryAddressingMode(MemoryAddressingModeType memAddrMode);
+
+		/**
+		 * @brief Set the column start address and end address of the display data RAM. 
+		 * This command also sets the column address pointer to column start address. 
+		 * This pointer is used to define the current read/write column address in graphic 
+		 * display data RAM
+		 * 
+		 * @param start start column address value (0 - 127)
+		 * @param end end column address (0 - 127)
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetColumnAddress(uint8_t start, uint8_t end);
+
+		/**
+		 * @brief Set the page start address and end address of the display data RAM. 
+		 * This command also sets the page address pointer to page start address. 
+		 * This pointer is used to define the current read/write page address in graphic 
+		 * display data RAM
+		 * 
+		 * @param start start page address value (0 - 127)
+		 * @param end end page address (0 - 127)
+		 * 
+		 * @return true - success, false - error
+		 */
+		bool SetPageAddress(uint8_t start, uint8_t end);
 
 		/**
 		 * @brief This command positions the page start address from 0 to 7 in GDDRAM 
@@ -271,8 +318,11 @@ namespace SSD1306
 		bool SetInverseDisplay(bool inverse);
 
 	private:
-		bool WriteCommand(Command command);
-		bool WriteCommand(uint8_t command);
+		uint8_t m_Width;
+		uint8_t m_Height;
+		bool Write(Command command);
+		bool Write(uint8_t command);
+		SSD1306::ComInterface* m_ComInterface;
 	};
 
 } // namespace SSD1306
